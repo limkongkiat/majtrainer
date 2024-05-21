@@ -30,17 +30,23 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List<String> buttonLabels = ['Button 1', 'Button 2', 'Button 3'];
+  List<String> buttonImages = [
+    'assets/button_image_1.png',
+    'assets/button_image_2.png',
+    'assets/button_image_1.png',
+  ];
 
   void _removeButton(int index) {
     setState(() {
-      buttonLabels.removeAt(index);
+      buttonImages.removeAt(index);
     });
   }
 
   void _addButton() {
     setState(() {
-      buttonLabels.add('Button ${buttonLabels.length + 1}');
+      String nextImage =
+          'assets/button_image_${(buttonImages.length % 2) + 1}.png';
+      buttonImages.add(nextImage);
     });
   }
 
@@ -48,7 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Dynamic Button List'),
+        title: Text('Mahjong Trainer'),
         actions: [
           IconButton(
             icon: Icon(Icons.add),
@@ -56,14 +62,22 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
       ),
-      body: ListView.builder(
-        itemCount: buttonLabels.length,
+      body: GridView.builder(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 7, // Number of columns
+          childAspectRatio: 1, // Aspect ratio of each item
+        ),
+        itemCount: buttonImages.length,
         itemBuilder: (context, index) {
           return Padding(
             padding: const EdgeInsets.all(8.0),
             child: ElevatedButton(
               onPressed: () => _removeButton(index),
-              child: Text(buttonLabels[index]),
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.zero,
+                minimumSize: Size(100, 100),
+              ),
+              child: Image.asset(buttonImages[index], fit: BoxFit.cover),
             ),
           );
         },
