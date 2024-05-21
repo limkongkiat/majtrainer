@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 void main() {
   runApp(const MyApp());
@@ -77,9 +76,11 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _addButtonImage(String imagePath) {
-    setState(() {
-      selectedImages.add(imagePath);
-    });
+    if (selectedImages.length < 14) {
+      setState(() {
+        selectedImages.add(imagePath);
+      });
+    }
   }
 
   @override
@@ -88,58 +89,55 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text('Discard Advisor'),
       ),
-      body: Column(
-        children: [
-          Flexible(
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: selectedImages.length,
-              itemBuilder: (context, index) {
-                return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: SizedBox(
-                      width: 50,
-                      height: 100,
-                      child: ElevatedButton(
-                        onPressed: () => _removeButton(index),
-                        style: ElevatedButton.styleFrom(
-                            padding: EdgeInsets.zero,
-                            //minimumSize: Size(10, 20),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(2))),
-                        child: Image.asset(selectedImages[index],
-                            fit: BoxFit.cover),
-                      ),
-                    ));
-              },
-            ),
-          ),
-          Spacer(),
-          Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: GridView.count(
-              crossAxisCount: 12,
-              shrinkWrap: true,
-              mainAxisSpacing: 10.0,
-              crossAxisSpacing: 10.0,
-              children: buttonImages.map((imagePath) {
-                return SizedBox(
+      body: Column(children: [
+        Flexible(
+          child: GridView.builder(
+            //scrollDirection: Axis.horizontal,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 14, crossAxisSpacing: 5.0),
+            itemCount: selectedImages.length,
+            itemBuilder: (context, index) {
+              return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SizedBox(
                     width: 50,
                     height: 100,
                     child: ElevatedButton(
-                      onPressed: () => _addButtonImage(imagePath),
+                      onPressed: () => _removeButton(index),
                       style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.zero,
-                          //minimumSize: Size(10, 20),
+                          backgroundColor: Colors.white,
+                          padding: EdgeInsets.all(5.0),
                           shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(2))),
-                      child: Image.asset(imagePath, fit: BoxFit.cover),
-                    ));
-              }).toList(),
-            ),
+                              borderRadius: BorderRadius.circular(10))),
+                      child:
+                          Image.asset(selectedImages[index], fit: BoxFit.cover),
+                    ),
+                  ));
+            },
           ),
-        ],
-      ),
+        ),
+        Flexible(
+            child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: GridView.builder(
+              itemCount: buttonImages.length,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 9,
+                  mainAxisSpacing: 10.0,
+                  crossAxisSpacing: 10.0),
+              itemBuilder: (context, index) {
+                return ElevatedButton(
+                    onPressed: () => _addButtonImage(buttonImages[index]),
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        padding: EdgeInsets.all(8.0),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        )),
+                    child: Image.asset(buttonImages[index], fit: BoxFit.cover));
+              }),
+        ))
+      ]),
     );
   }
 }
