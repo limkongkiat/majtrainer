@@ -82,6 +82,7 @@ class _MyHomePageState extends State<MyHomePage> {
     if (selectedImages.length < 14 && tileCount[index] > 0) {
       setState(() {
         selectedImages.add(index);
+        selectedImages.sort((a, b) => a.compareTo(b));
       });
       tileCount[index] -= 1;
     }
