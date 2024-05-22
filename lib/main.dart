@@ -30,7 +30,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List<String> selectedImages = [];
+  List<int> selectedImages = [];
 
   final List<String> buttonImages = [
     'assets/Man1.png',
@@ -69,17 +69,21 @@ class _MyHomePageState extends State<MyHomePage> {
     'assets/Haku.png',
   ];
 
+  List<int> tileCount = List.filled(34, 4);
+
   void _removeButton(int index) {
+    tileCount[selectedImages[index]] += 1;
     setState(() {
       selectedImages.removeAt(index);
     });
   }
 
-  void _addButtonImage(String imagePath) {
-    if (selectedImages.length < 14) {
+  void _addButtonImage(int index) {
+    if (selectedImages.length < 14 && tileCount[index] > 0) {
       setState(() {
-        selectedImages.add(imagePath);
+        selectedImages.add(index);
       });
+      tileCount[index] -= 1;
     }
   }
 
@@ -94,7 +98,7 @@ class _MyHomePageState extends State<MyHomePage> {
           child: GridView.builder(
             //scrollDirection: Axis.horizontal,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 14, crossAxisSpacing: 5.0),
+                crossAxisCount: 7, crossAxisSpacing: 1.0),
             itemCount: selectedImages.length,
             itemBuilder: (context, index) {
               return Padding(
@@ -109,8 +113,8 @@ class _MyHomePageState extends State<MyHomePage> {
                           padding: EdgeInsets.all(5.0),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10))),
-                      child:
-                          Image.asset(selectedImages[index], fit: BoxFit.cover),
+                      child: Image.asset(buttonImages[selectedImages[index]],
+                          fit: BoxFit.cover),
                     ),
                   ));
             },
@@ -122,12 +126,12 @@ class _MyHomePageState extends State<MyHomePage> {
           child: GridView.builder(
               itemCount: buttonImages.length,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 9,
-                  mainAxisSpacing: 10.0,
-                  crossAxisSpacing: 10.0),
+                  crossAxisCount: 5,
+                  mainAxisSpacing: 2.0,
+                  crossAxisSpacing: 2.0),
               itemBuilder: (context, index) {
                 return ElevatedButton(
-                    onPressed: () => _addButtonImage(buttonImages[index]),
+                    onPressed: () => _addButtonImage(index),
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.white,
                         padding: EdgeInsets.all(8.0),
