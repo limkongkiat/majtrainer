@@ -7,17 +7,16 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'mahjong trainer',
+      title: 'Mahjong Trainer',
       theme: ThemeData(
-        colorScheme:
-            ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 0, 49, 10)),
+        colorScheme: ColorScheme.fromSeed(
+            seedColor: const Color.fromARGB(255, 0, 49, 10)),
         useMaterial3: true,
       ),
-      home: MyHomePage(),
+      home: const MyHomePage(),
     );
   }
 }
@@ -69,22 +68,22 @@ class _MyHomePageState extends State<MyHomePage> {
     'assets/Haku.png',
   ];
 
-  List<int> tileCount = List.filled(34, 4);
+  List<int> tileCount = List.filled(34, 0);
 
   void _removeButton(int index) {
-    tileCount[selectedImages[index]] += 1;
+    tileCount[selectedImages[index]] -= 1;
     setState(() {
       selectedImages.removeAt(index);
     });
   }
 
   void _addButtonImage(int index) {
-    if (selectedImages.length < 14 && tileCount[index] > 0) {
+    if (selectedImages.length < 14 && tileCount[index] < 4) {
       setState(() {
         selectedImages.add(index);
         selectedImages.sort((a, b) => a.compareTo(b));
       });
-      tileCount[index] -= 1;
+      tileCount[index] += 1;
     }
   }
 
@@ -92,57 +91,146 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Discard Advisor'),
+        title: const Text('Discard Advisor'),
+        backgroundColor: Colors.green[700],
       ),
-      body: Column(children: [
-        Flexible(
-          child: GridView.builder(
-            //scrollDirection: Axis.horizontal,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 7, crossAxisSpacing: 1.0),
-            itemCount: selectedImages.length,
-            itemBuilder: (context, index) {
-              return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: SizedBox(
-                    width: 50,
-                    height: 100,
-                    child: ElevatedButton(
-                      onPressed: () => _removeButton(index),
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white,
-                          padding: EdgeInsets.all(5.0),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10))),
-                      child: Image.asset(buttonImages[selectedImages[index]],
-                          fit: BoxFit.cover),
-                    ),
-                  ));
-            },
-          ),
-        ),
-        Flexible(
-            child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: GridView.builder(
-              itemCount: buttonImages.length,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 5,
+      body: Container(
+        color: Colors.green[700],
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Selected Hand Section
+            const Text(
+              'Selected Hand',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 10),
+            Flexible(
+              //flex: 2,
+              child: GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 7,
+                  crossAxisSpacing: 2.0,
                   mainAxisSpacing: 2.0,
-                  crossAxisSpacing: 2.0),
-              itemBuilder: (context, index) {
-                return ElevatedButton(
-                    onPressed: () => _addButtonImage(index),
-                    style: ElevatedButton.styleFrom(
+                  childAspectRatio: 0.8,
+                ),
+                itemCount: selectedImages.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.all(2.0),
+                    child: SizedBox(
+                      //width: 50,
+                      //height: 200,
+                      child: ElevatedButton(
+                        onPressed: () => _removeButton(index),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          padding: const EdgeInsets.all(5.0),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(3),
+                          ),
+                        ),
+                        child: Image.asset(
+                          buttonImages[selectedImages[index]],
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+            const SizedBox(height: 10),
+            // Select Tiles Section
+            const Text(
+              'Select Tiles',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 10),
+            Expanded(
+              flex: 3,
+              child: Padding(
+                padding: const EdgeInsets.all(2.0),
+                child: GridView.builder(
+                  itemCount: buttonImages.length,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 6,
+                    mainAxisSpacing: 4.0,
+                    crossAxisSpacing: 4.0,
+                    childAspectRatio: 0.8,
+                  ),
+                  itemBuilder: (context, index) {
+                    return ElevatedButton(
+                      onPressed: () => _addButtonImage(index),
+                      style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.white,
-                        padding: EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(5.0),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        )),
-                    child: Image.asset(buttonImages[index], fit: BoxFit.cover));
-              }),
-        ))
-      ]),
+                          borderRadius: BorderRadius.circular(3),
+                        ),
+                      ),
+                      child:
+                          Image.asset(buttonImages[index], fit: BoxFit.cover),
+                    );
+                  },
+                ),
+              ),
+            ),
+            // Calculate and Back Buttons
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      // Add your calculate logic here
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.orange,
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 15.0, horizontal: 30.0),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                    ),
+                    child: const Text(
+                      'CALCULATE',
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      // Add your back logic here
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.red,
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 15.0, horizontal: 30.0),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                    ),
+                    child: const Text(
+                      'BACK',
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
