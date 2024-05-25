@@ -87,7 +87,7 @@ class ShantenCalculator {
       if (hand[i] >= 2) {
         pair++;
         hand[i] -= 2;
-        removeCompletedSets(hand, i);
+        removeCompletedSets(hand, 0);
         hand[i] += 2;
         pair--;
       }
@@ -116,7 +116,7 @@ class ShantenCalculator {
       completeSets--;
     }
 
-    if (i < 25 && hand[i + 1] != 0 && hand[i + 2] != 0) {
+    if (i < 25 && (i % 9 < 7) && hand[i + 1] != 0 && hand[i + 2] != 0) {
       completeSets++;
       hand[i]--;
       hand[i + 1]--;
@@ -153,7 +153,7 @@ class ShantenCalculator {
         partialSets--;
       }
 
-      if (i < 26 && hand[i + 1] != 0) {
+      if (i < 26 && i != 8 && i != 17 && hand[i + 1] != 0) {
         partialSets++;
         hand[i]--;
         hand[i + 1]--;
@@ -163,7 +163,12 @@ class ShantenCalculator {
         partialSets--;
       }
 
-      if (i < 25 && hand[i + 2] != 0) {
+      if (i < 25 &&
+          i != 7 &&
+          i != 8 &&
+          i != 16 &&
+          i != 17 &&
+          hand[i + 2] != 0) {
         partialSets++;
         hand[i]--;
         hand[i + 2]--;
@@ -235,7 +240,7 @@ Result findBestDiscard(List<int> hand) {
 }
 
 void main() {
-  List<int> rawHand = [6, 8, 8, 10, 11, 11, 12, 16, 17, 19, 21, 25, 25, 26];
+  List<int> rawHand = [2, 3, 4, 5, 6, 14, 17, 14, 17, 17, 3, 23, 24, 3];
   List<int> hand = List<int>.filled(34, 0);
   for (int i = 0; i < rawHand.length; i++) {
     hand[rawHand[i]] += 1;
