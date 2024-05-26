@@ -217,7 +217,7 @@ Result findBestDiscard(List<int> hand) {
   ShantenCalculator sCalc = ShantenCalculator();
   int initShanten = sCalc.calculateMinimumShanten(hand);
 
-  int bestTile = -1;
+  int bestTile = 0;
   int ukeire = 0;
   int handType = sCalc.handType;
 
