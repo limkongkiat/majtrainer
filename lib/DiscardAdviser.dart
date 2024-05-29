@@ -72,11 +72,12 @@ class _DiscardAdvisorState extends State<DiscardAdvisor> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Discard Advisor'),
-        backgroundColor: Colors.green[700],
+        title: const Text('Discard Advisor',
+            style: TextStyle(color: Colors.white)),
+        backgroundColor: Color.fromARGB(255, 13, 97, 51),
       ),
       body: Container(
-        color: Colors.green[700],
+        color: Color.fromARGB(255, 13, 97, 51),
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -193,7 +194,8 @@ class _DiscardAdvisorState extends State<DiscardAdvisor> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => DiscardResult(result)));
+                                builder: (context) =>
+                                    DiscardResult(result, selectedImages)));
                       }
                     },
                     style: ElevatedButton.styleFrom(

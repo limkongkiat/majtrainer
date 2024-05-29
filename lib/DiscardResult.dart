@@ -46,22 +46,31 @@ class DiscardResult extends StatelessWidget {
   ];
 
   final Result result;
+  final List<int> selectedImages;
 
-  DiscardResult(this.result);
+  DiscardResult(this.result, this.selectedImages);
 
   @override
   Widget build(BuildContext context) {
+    selectedImages.remove(result.bestTile);
     //TODO: Handle winning hand case
     return Container(
-      color: Colors.green[700],
+      color: Color.fromARGB(255, 13, 97, 51),
       padding: const EdgeInsets.all(16.0),
       child: Center(
           child: Column(
         children: <Widget>[
-          const SizedBox(height: 100),
+          const SizedBox(height: 50),
+          const Text('Best Discard',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              )),
+          const SizedBox(height: 10),
           Container(
-              width: 240,
-              height: 400,
+              width: 120,
+              height: 200,
               decoration: const BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(10.0)),
                   color: Colors.white),
@@ -78,6 +87,40 @@ class DiscardResult extends StatelessWidget {
               style: const TextStyle(color: Colors.white, fontSize: 20),
               textAlign: TextAlign.center),
           const SizedBox(height: 20),
+          const Text('Resulting Hand',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              )),
+          const SizedBox(height: 10),
+          Flexible(
+            //flex: 2,
+            child: GridView.builder(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 7,
+                crossAxisSpacing: 2.0,
+                mainAxisSpacing: 2.0,
+                childAspectRatio: 0.8,
+              ),
+              itemCount: selectedImages.length,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.all(2.0),
+                  child: Container(
+                      padding: const EdgeInsets.all(2.0),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: Image.asset(
+                        buttonImages[selectedImages[index]],
+                        fit: BoxFit.contain,
+                      )),
+                );
+              },
+            ),
+          ),
           ElevatedButton(
             onPressed: () {
               Navigator.pop(context);
