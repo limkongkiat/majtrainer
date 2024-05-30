@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:majtrainer/DiscardResult.dart';
+import 'package:majtrainer/WinningHand.dart';
 import 'ShantenCalculator.dart';
 
 class DiscardAdvisor extends StatefulWidget {
@@ -75,6 +76,28 @@ class _DiscardAdvisorState extends State<DiscardAdvisor> {
         title: const Text('Discard Advisor',
             style: TextStyle(color: Colors.white)),
         backgroundColor: Color.fromARGB(255, 13, 97, 51),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.help, color: Colors.white),
+            tooltip: 'Help',
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text('Close'),
+                          ),
+                        ],
+                        title: const Text(
+                            'Select tiles from the bottom half of the screen to form your hand.\n\nTo deselect a tile, tap the tile in the selected hand.\n\nOnce 14 tiles have been selected, press Calculate to get the best discard.'),
+                      ));
+            },
+          )
+        ],
       ),
       body: Container(
         color: Color.fromARGB(255, 13, 97, 51),
@@ -191,11 +214,19 @@ class _DiscardAdvisorState extends State<DiscardAdvisor> {
                                 ));
                       } else {
                         Result result = findBestDiscard(tileCount);
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    DiscardResult(result, selectedImages)));
+                        if (result.shanten == -1) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      WinningHand(selectedImages)));
+                        } else {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      DiscardResult(result, selectedImages)));
+                        }
                       }
                     },
                     style: ElevatedButton.styleFrom(

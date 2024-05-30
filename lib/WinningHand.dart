@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'ShantenCalculator.dart';
 
-class DiscardResult extends StatelessWidget {
+class WinningHand extends StatelessWidget {
   final List<String> buttonImages = [
     'assets/Man1.png',
     'assets/Man2.png',
@@ -39,20 +39,13 @@ class DiscardResult extends StatelessWidget {
     'assets/Haku.png',
   ];
 
-  final List<String> handTypeCode = [
-    "standard hand",
-    "Chiitoitsu hand",
-    'Kokushi Musou hand'
-  ];
-
-  final Result result;
+  //final Result result;
   final List<int> selectedImages;
 
-  DiscardResult(this.result, this.selectedImages);
+  WinningHand(this.selectedImages);
 
   @override
   Widget build(BuildContext context) {
-    selectedImages.remove(result.bestTile);
     //TODO: Handle winning hand case
     return Container(
       color: Color.fromARGB(255, 13, 97, 51),
@@ -61,33 +54,14 @@ class DiscardResult extends StatelessWidget {
           child: Column(
         children: <Widget>[
           const SizedBox(height: 50),
-          const Text('Best Discard',
+          const Text('Winning Hand!',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               )),
           const SizedBox(height: 10),
-          Container(
-              width: 120,
-              height: 200,
-              decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                  color: Colors.white),
-              child: Padding(
-                padding: const EdgeInsets.all(5.0),
-                child: Image.asset(
-                  buttonImages[result.bestTile],
-                  fit: BoxFit.cover,
-                ),
-              )),
-          const SizedBox(height: 20),
-          Text(
-              'Discard for a ${handTypeCode[result.handType]} at ${result.shanten}-shanten with acceptance of ${result.ukeire} tiles',
-              style: const TextStyle(color: Colors.white, fontSize: 20),
-              textAlign: TextAlign.center),
-          const SizedBox(height: 20),
-          const Text('Resulting Hand',
+          const Text('Final Hand',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 20,
@@ -123,8 +97,6 @@ class DiscardResult extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () {
-              selectedImages.add(result.bestTile);
-              selectedImages.sort();
               Navigator.pop(context);
             },
             style: ElevatedButton.styleFrom(
