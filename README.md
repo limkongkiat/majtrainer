@@ -1,16 +1,35 @@
 # majtrainer
 
-A new Flutter project.
+This is an app made for Andriod.
 
-## Getting Started
+There are 3 apk files listed in the repository. 
 
-This project is a starting point for a Flutter application.
+#IF USING ANDRIOD PHONE
+One of the 3 apk files should work and sucessfully run on your phone
 
-A few resources to get you started if this is your first Flutter project:
+Else, follow the troubleshoot:
+1) Go to settings --> security
+2) Enable the option that says "Allow installation of apps from other sources other than play store"
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+#IF OPENING USING COMPUTER
+
+1) Download Bluestacks. Take note to download the right version for windows/mac/linux/etc.
+2) Launch BlueStacks:
+Open the BlueStacks application on your computer.
+
+3) Install the APK file:
+There are a few ways to install an APK file on BlueStacks:
+
+Method 1: Drag and Drop
+
+Drag the APK file from your file explorer and drop it onto the BlueStacks home screen.
+
+Method 2: Use the "Install APK" Button
+
+Click on the “Install APK” button on the BlueStacks home screen. It's usually found in the bottom right corner of the screen or in the "My Apps" tab.
+A file explorer window will open. Navigate to the location of your APK file, select it, and click "Open."
+Run the APK:
+
+Once the APK is installed, you will see the app icon on the BlueStacks home screen or in the "My Apps" tab.
+Click on the app icon to launch the app.
