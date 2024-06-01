@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:majtrainer/DiscardAdviser.dart';
+import 'package:majtrainer/HomeScreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
             seedColor: const Color.fromARGB(255, 0, 49, 10)),
         useMaterial3: true,
       ),
-      home: const DiscardAdvisor(),
+      home: const HomeScreen(),
     );
   }
 }
