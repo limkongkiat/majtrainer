@@ -2,7 +2,10 @@
 
 This is an app made for Andriod.
 
-There are 3 apk files listed in the repository. 
+There are 3 apk files listed in the repository as follows:
+ARM64: https://github.com/limkongkiat/majtrainer/blob/main/app-arm64-v8a-release.apk
+ARM EABI: https://github.com/limkongkiat/majtrainer/blob/main/app-armeabi-v7a-release.apk
+x86: https://github.com/limkongkiat/majtrainer/blob/main/app-x86_64-release.apk
 
 #IF USING ANDRIOD PHONE
 One of the 3 apk files should work and sucessfully run on your phone
