@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:majtrainer/DiscardAdviser.dart';
+import 'package:majtrainer/hand_value_calculator.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -72,7 +73,12 @@ class HomeScreen extends StatelessWidget {
             SizedBox(
               width: 250,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const HandValueCalculator()),
+                  );
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.red,
                   padding: const EdgeInsets.symmetric(vertical: 15),
