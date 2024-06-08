@@ -48,6 +48,10 @@ class _HandValueCalculatorState extends State<HandValueCalculator> {
   List<int> selectedImages = [];
   List<int> tileCount = List.filled(34, 0);
 
+  int? tableWindIndex;
+  int? seatWindIndex;
+  String? selectedWind;
+
   void _removeButton(int index) {
     tileCount[selectedImages[index]] -= 1;
     setState(() {
@@ -56,7 +60,11 @@ class _HandValueCalculatorState extends State<HandValueCalculator> {
   }
 
   void _addButtonImage(int index) {
-    if (selectedImages.length < 14 && tileCount[index] < 4) {
+    if (selectedWind == 'table') {
+      _setTableWind(index);
+    } else if (selectedWind == 'seat') {
+      _setSeatWind(index);
+    } else if (selectedImages.length < 14 && tileCount[index] < 4) {
       setState(() {
         selectedImages.add(index);
         selectedImages.sort((a, b) => a.compareTo(b));
@@ -65,12 +73,31 @@ class _HandValueCalculatorState extends State<HandValueCalculator> {
     }
   }
 
+  void _setTableWind(int index) {
+    setState(() {
+      tableWindIndex = index;
+      selectedWind = null;
+    });
+  }
+
+  void _setSeatWind(int index) {
+    setState(() {
+      seatWindIndex = index;
+      selectedWind = null;
+    });
+  }
+
+  void _selectWind(String wind) {
+    setState(() {
+      selectedWind = wind;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Hand Value Calculator',
-            style: TextStyle(color: Colors.white)),
+        title: const Text('Hand Value Calculator', style: TextStyle(color: Colors.white)),
         backgroundColor: const Color.fromARGB(255, 13, 97, 51),
       ),
       body: Container(
@@ -125,37 +152,47 @@ class _HandValueCalculatorState extends State<HandValueCalculator> {
               children: [
                 Column(
                   children: [
-                    const Text('Table Wind',
-                        style: TextStyle(fontSize: 20, color: Colors.white)),
+                    const Text('Table Wind', style: TextStyle(fontSize: 20, color: Colors.white)),
                     const SizedBox(height: 10),
-                    ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.red,
-                        padding: const EdgeInsets.all(20.0),
-                        shape: RoundedRectangleBorder(
+                    GestureDetector(
+                      onTap: () => _selectWind('table'),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: selectedWind == 'table' ? Colors.yellow : Colors.transparent,
+                            width: 4.0,
+                          ),
                           borderRadius: BorderRadius.circular(10),
+                          color: Colors.red,
                         ),
+                        padding: const EdgeInsets.all(20.0),
+                        child: tableWindIndex != null
+                            ? Image.asset(buttonImages[tableWindIndex!], fit: BoxFit.cover)
+                            : const SizedBox.shrink(),
                       ),
-                      child: const Text(''),
                     ),
                   ],
                 ),
                 Column(
                   children: [
-                    const Text('Seat Wind',
-                        style: TextStyle(fontSize: 20, color: Colors.white)),
+                    const Text('Seat Wind', style: TextStyle(fontSize: 20, color: Colors.white)),
                     const SizedBox(height: 10),
-                    ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.red,
-                        padding: const EdgeInsets.all(20.0),
-                        shape: RoundedRectangleBorder(
+                    GestureDetector(
+                      onTap: () => _selectWind('seat'),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: selectedWind == 'seat' ? Colors.yellow : Colors.transparent,
+                            width: 4.0,
+                          ),
                           borderRadius: BorderRadius.circular(10),
+                          color: Colors.red,
                         ),
+                        padding: const EdgeInsets.all(20.0),
+                        child: seatWindIndex != null
+                            ? Image.asset(buttonImages[seatWindIndex!], fit: BoxFit.cover)
+                            : const SizedBox.shrink(),
                       ),
-                      child: const Text(''),
                     ),
                   ],
                 ),
@@ -226,16 +263,12 @@ class _HandValueCalculatorState extends State<HandValueCalculator> {
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.orange,
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 15.0, horizontal: 30.0),
+                      padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 30.0),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15),
                       ),
                     ),
-                    child: const Text(
-                      'CALCULATE',
-                      style: TextStyle(fontSize: 20),
-                    ),
+                    child: const Text('CALCULATE', style: TextStyle(fontSize: 20)),
                   ),
                   ElevatedButton(
                     onPressed: () {
@@ -243,16 +276,12 @@ class _HandValueCalculatorState extends State<HandValueCalculator> {
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.red,
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 15.0, horizontal: 30.0),
+                      padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 30.0),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15),
                       ),
                     ),
-                    child: const Text(
-                      'BACK',
-                      style: TextStyle(fontSize: 20),
-                    ),
+                    child: const Text('BACK', style: TextStyle(fontSize: 20)),
                   ),
                 ],
               ),
