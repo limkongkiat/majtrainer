@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:majtrainer/DiscardAdviser.dart';
 import 'package:majtrainer/hand_value_calculator.dart';
+import 'package:majtrainer/trainerscreen.dart'; // Import the TrainerScreen
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -38,7 +39,12 @@ class HomeScreen extends StatelessWidget {
             SizedBox(
               width: 250,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const TrainerScreen()), // Navigate to TrainerScreen
+                  );
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.red,
                   padding: const EdgeInsets.symmetric(vertical: 15),
