@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
-import 'dart:math';
 import 'ShantenCalculator.dart';
-import 'TrainerResult.dart';
 
-class TrainerScreen extends StatefulWidget {
-  const TrainerScreen({super.key});
+class TrainerResult extends StatefulWidget {
+  final Function(bool) callback;
+  int chosen;
+  Result result;
+  List<int> selectedImages;
+  TrainerResult(this.chosen, this.result, this.selectedImages, this.callback);
 
   @override
-  _TrainerScreenState createState() => _TrainerScreenState();
+  _TrainerResultState createState() => _TrainerResultState();
 }
 
-class _TrainerScreenState extends State<TrainerScreen> {
+class _TrainerResultState extends State<TrainerResult> {
   List<String> buttonImages = [
     'assets/Man1.png',
     'assets/Man2.png',
@@ -48,50 +50,12 @@ class _TrainerScreenState extends State<TrainerScreen> {
     'assets/Haku.png',
   ];
 
-  List<int> selectedImages = [];
-  List<int> tileCount = List.filled(34, 0);
   int currScore = 0;
   int totalHands = 0;
 
   @override
-  void initState() {
-    super.initState();
-    _generateRandomTiles();
-  }
-
-  void _generateRandomTiles() {
-    //reset hand
-    while (selectedImages.isNotEmpty) {
-      selectedImages.removeAt(0);
-    }
-    for (int i = 0; i < 34; i++) {
-      tileCount[i] = 0;
-    }
-    //generate new hand
-    final random = Random();
-    while (selectedImages.length < 14) {
-      int rng = random.nextInt(34);
-      if (tileCount[rng] < 4) {
-        tileCount[rng] += 1;
-        selectedImages.add(rng);
-      }
-    }
-    selectedImages.sort((a, b) => a.compareTo(b));
-  }
-
-  void nextHand(bool isCorrect) {
-    setState(() {
-      if (isCorrect) {
-        currScore++;
-      }
-      totalHands++;
-      _generateRandomTiles();
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
-    Result result = findBestDiscard(tileCount);
+    //Result result = findBestDiscard(tileCount);
     return Scaffold(
       appBar: AppBar(
         title:
@@ -131,31 +95,60 @@ class _TrainerScreenState extends State<TrainerScreen> {
                   mainAxisSpacing: 2.0,
                   childAspectRatio: 0.8,
                 ),
-                itemCount: selectedImages.length,
+                itemCount: widget.selectedImages.length,
                 itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(2.0),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => TrainerResult(
-                                    index, result, selectedImages, nextHand)));
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        padding: const EdgeInsets.all(5.0),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(3),
+                  if (widget.selectedImages[index] == widget.result.bestTile) {
+                    return Padding(
+                      padding: const EdgeInsets.all(2.0),
+                      child: Stack(children: <Widget>[
+                        Container(
+                          padding: const EdgeInsets.all(2.0),
+                          decoration: const BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(2.0)),
+                              color: Colors.white),
+                          child: Image.asset(
+                            buttonImages[widget.selectedImages[index]],
+                            fit: BoxFit.contain,
+                          ),
+                        ),
+                        Container(color: Colors.green.withOpacity(0.5))
+                      ]),
+                    );
+                  } else if (index == widget.chosen) {
+                    return Padding(
+                      padding: const EdgeInsets.all(2.0),
+                      child: Stack(children: <Widget>[
+                        Container(
+                          padding: const EdgeInsets.all(2.0),
+                          decoration: const BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(2.0)),
+                              color: Colors.white),
+                          child: Image.asset(
+                            buttonImages[widget.selectedImages[index]],
+                            fit: BoxFit.contain,
+                          ),
+                        ),
+                        Container(color: Colors.red.withOpacity(0.5))
+                      ]),
+                    );
+                  } else {
+                    return Padding(
+                      padding: const EdgeInsets.all(2.0),
+                      child: Container(
+                        padding: const EdgeInsets.all(2.0),
+                        decoration: const BoxDecoration(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(2.0)),
+                            color: Colors.white),
+                        child: Image.asset(
+                          buttonImages[widget.selectedImages[index]],
+                          fit: BoxFit.contain,
                         ),
                       ),
-                      child: Image.asset(
-                        buttonImages[selectedImages[index]],
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  );
+                    );
+                  }
                 },
               ),
             ),
@@ -200,6 +193,8 @@ class _TrainerScreenState extends State<TrainerScreen> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
+                widget.callback(widget.selectedImages[widget.chosen] ==
+                    widget.result.bestTile);
                 Navigator.pop(context);
               },
               style: ElevatedButton.styleFrom(

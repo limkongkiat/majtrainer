@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'ShantenCalculator.dart';
+//import 'ShantenCalculator.dart';
 
 class WinningHand extends StatelessWidget {
   final List<String> buttonImages = [

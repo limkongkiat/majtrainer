@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "191820068370",
+    "project_id": "mahjong-trainer",
+    "storage_bucket": "mahjong-trainer.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:191820068370:android:e71134942997cd378a0acb",
+        "android_client_info": {
+          "package_name": "com.example.majtrainer"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEjeKcOnmBfub1DDiakapY4Yt0DCdmFyI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
