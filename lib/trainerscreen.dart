@@ -92,129 +92,187 @@ class _TrainerScreenState extends State<TrainerScreen> {
   @override
   Widget build(BuildContext context) {
     Result result = findBestDiscard(tileCount);
-    return Scaffold(
-      appBar: AppBar(
-        title:
-            const Text('Trainer Mode', style: TextStyle(color: Colors.white)),
-        backgroundColor: const Color.fromARGB(255, 13, 97, 51),
-      ),
-      body: Container(
-        color: const Color.fromARGB(255, 13, 97, 51),
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const Text(
-              'Trainer Mode',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 20),
-            const Text(
-              'Hand',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 10),
-            Flexible(
-              child: GridView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 7,
-                  crossAxisSpacing: 2.0,
-                  mainAxisSpacing: 2.0,
-                  childAspectRatio: 0.8,
-                ),
-                itemCount: selectedImages.length,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(2.0),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => TrainerResult(
-                                    index, result, selectedImages, nextHand)));
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        padding: const EdgeInsets.all(5.0),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(3),
-                        ),
-                      ),
-                      child: Image.asset(
-                        buttonImages[selectedImages[index]],
-                        fit: BoxFit.cover,
+    if (totalHands >= 5) {
+      //Final results screen.
+      //TODO: make page not take up only half the screen
+      return Scaffold(
+          appBar: AppBar(
+            title: const Text('Trainer Mode',
+                style: TextStyle(color: Colors.white)),
+            backgroundColor: const Color.fromARGB(255, 13, 97, 51),
+          ),
+          body: Container(
+              color: const Color.fromARGB(255, 13, 97, 51),
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                //crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Text(
+                    'Trainer Mode',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  Text(
+                    "Done!\nScore: $currScore / $totalHands",
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.red,
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 15.0, horizontal: 30.0),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
                       ),
                     ),
-                  );
-                },
-              ),
-            ),
-            const SizedBox(height: 20),
-            const Text(
-              'Choose a tile to discard',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 18,
-              ),
-            ),
-            const SizedBox(height: 20),
-            const Text(
-              'Current Score:',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 18,
-              ),
-            ),
-            Text(
-              '$currScore',
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 18,
-              ),
-            ),
-            const SizedBox(height: 20),
-            const Text(
-              'Total Hands:',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 18,
-              ),
-            ),
-            Text(
-              '$totalHands',
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 18,
-              ),
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.red,
-                padding: const EdgeInsets.symmetric(
-                    vertical: 15.0, horizontal: 30.0),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15),
+                    child: const Text('BACK', style: TextStyle(fontSize: 20)),
+                  ),
+                ],
+              )));
+    } else {
+      //standard trainer page
+      return Scaffold(
+        appBar: AppBar(
+          title:
+              const Text('Trainer Mode', style: TextStyle(color: Colors.white)),
+          backgroundColor: const Color.fromARGB(255, 13, 97, 51),
+        ),
+        body: Container(
+          color: const Color.fromARGB(255, 13, 97, 51),
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const Text(
+                'Trainer Mode',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-              child: const Text('BACK', style: TextStyle(fontSize: 20)),
-            ),
-          ],
+              const SizedBox(height: 20),
+              const Text(
+                'Hand',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 10),
+              Flexible(
+                child: GridView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 7,
+                    crossAxisSpacing: 2.0,
+                    mainAxisSpacing: 2.0,
+                    childAspectRatio: 0.8,
+                  ),
+                  itemCount: selectedImages.length,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.all(2.0),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => TrainerResult(
+                                      index,
+                                      result,
+                                      selectedImages,
+                                      currScore,
+                                      totalHands,
+                                      nextHand)));
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          padding: const EdgeInsets.all(5.0),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(3),
+                          ),
+                        ),
+                        child: Image.asset(
+                          buttonImages[selectedImages[index]],
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+              const SizedBox(height: 20),
+              const Text(
+                'Choose a tile to discard',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                ),
+              ),
+              const SizedBox(height: 20),
+              const Text(
+                'Current Score:',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                ),
+              ),
+              Text(
+                '$currScore',
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                ),
+              ),
+              const SizedBox(height: 20),
+              const Text(
+                'Total Hands:',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                ),
+              ),
+              Text(
+                '$totalHands',
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                ),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red,
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 15.0, horizontal: 30.0),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                ),
+                child: const Text('BACK', style: TextStyle(fontSize: 20)),
+              ),
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    }
   }
 }

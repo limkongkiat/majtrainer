@@ -6,7 +6,11 @@ class TrainerResult extends StatefulWidget {
   int chosen;
   Result result;
   List<int> selectedImages;
-  TrainerResult(this.chosen, this.result, this.selectedImages, this.callback);
+  int currScore;
+  int totalHands;
+
+  TrainerResult(this.chosen, this.result, this.selectedImages, this.currScore,
+      this.totalHands, this.callback);
 
   @override
   _TrainerResultState createState() => _TrainerResultState();
@@ -50,11 +54,16 @@ class _TrainerResultState extends State<TrainerResult> {
     'assets/Haku.png',
   ];
 
-  int currScore = 0;
-  int totalHands = 0;
+  final List<String> handTypeCode = [
+    "standard hand",
+    "Chiitoitsu hand",
+    'Kokushi Musou hand'
+  ];
 
   @override
   Widget build(BuildContext context) {
+    bool isCorrect =
+        widget.selectedImages[widget.chosen] == widget.result.bestTile;
     //Result result = findBestDiscard(tileCount);
     return Scaffold(
       appBar: AppBar(
@@ -153,13 +162,13 @@ class _TrainerResultState extends State<TrainerResult> {
               ),
             ),
             const SizedBox(height: 20),
-            const Text(
-              'Choose a tile to discard',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 18,
-              ),
-            ),
+            Text(
+                '${isCorrect ? 'Correct!' : 'Wrong!'} Throw ${widget.result.bestTile} for a ${handTypeCode[widget.result.handType]} at ${widget.result.shanten}-shanten with acceptance of ${widget.result.ukeire} tiles',
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                ),
+                textAlign: TextAlign.center),
             const SizedBox(height: 20),
             const Text(
               'Current Score:',
@@ -169,7 +178,7 @@ class _TrainerResultState extends State<TrainerResult> {
               ),
             ),
             Text(
-              '$currScore',
+              '${isCorrect ? widget.currScore + 1 : widget.currScore}',
               style: const TextStyle(
                 color: Colors.white,
                 fontSize: 18,
@@ -184,7 +193,7 @@ class _TrainerResultState extends State<TrainerResult> {
               ),
             ),
             Text(
-              '$totalHands',
+              '${widget.totalHands + 1}',
               style: const TextStyle(
                 color: Colors.white,
                 fontSize: 18,
@@ -205,7 +214,7 @@ class _TrainerResultState extends State<TrainerResult> {
                   borderRadius: BorderRadius.circular(15),
                 ),
               ),
-              child: const Text('BACK', style: TextStyle(fontSize: 20)),
+              child: const Text('NEXT', style: TextStyle(fontSize: 20)),
             ),
           ],
         ),
