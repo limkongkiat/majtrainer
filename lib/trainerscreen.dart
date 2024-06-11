@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
+import 'ShantenCalculator.dart';
 
 class TrainerScreen extends StatefulWidget {
   const TrainerScreen({super.key});
@@ -47,6 +48,9 @@ class _TrainerScreenState extends State<TrainerScreen> {
   ];
 
   List<int> selectedImages = [];
+  List<int> tileCount = List.filled(34, 0);
+  int currScore = 0;
+  int totalHands = 0;
 
   @override
   void initState() {
@@ -55,10 +59,23 @@ class _TrainerScreenState extends State<TrainerScreen> {
   }
 
   void _generateRandomTiles() {
-    final random = Random();
-    for (int i = 0; i < 14; i++) {
-      selectedImages.add(random.nextInt(buttonImages.length));
+    //reset hand
+    while (selectedImages.isNotEmpty) {
+      selectedImages.removeAt(0);
     }
+    for (int i = 0; i < 34; i++) {
+      tileCount[i] = 0;
+    }
+    //generate new hand
+    final random = Random();
+    while (selectedImages.length < 14) {
+      int rng = random.nextInt(34);
+      if (tileCount[rng] < 4) {
+        tileCount[rng] += 1;
+        selectedImages.add(rng);
+      }
+    }
+    selectedImages.sort((a, b) => a.compareTo(b));
   }
 
   void _removeButton(int index) {
@@ -69,9 +86,11 @@ class _TrainerScreenState extends State<TrainerScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Result result = findBestDiscard(tileCount);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Trainer Mode', style: TextStyle(color: Colors.white)),
+        title:
+            const Text('Trainer Mode', style: TextStyle(color: Colors.white)),
         backgroundColor: const Color.fromARGB(255, 13, 97, 51),
       ),
       body: Container(
@@ -112,7 +131,42 @@ class _TrainerScreenState extends State<TrainerScreen> {
                   return Padding(
                     padding: const EdgeInsets.all(2.0),
                     child: ElevatedButton(
-                      onPressed: () => _removeButton(index),
+                      onPressed: () {
+                        if (selectedImages[index] == result.bestTile) {
+                          currScore++;
+                          showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: const Text('Close'),
+                                      ),
+                                    ],
+                                    title: const Text('Correct'),
+                                  ));
+                        } else {
+                          showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: const Text('Close'),
+                                      ),
+                                    ],
+                                    title: const Text('Wrong'),
+                                  ));
+                        }
+                        setState(() {
+                          totalHands++;
+                          _generateRandomTiles();
+                        });
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.white,
                         padding: const EdgeInsets.all(5.0),
@@ -145,9 +199,9 @@ class _TrainerScreenState extends State<TrainerScreen> {
                 fontSize: 18,
               ),
             ),
-            const Text(
-              '0',
-              style: TextStyle(
+            Text(
+              '$currScore',
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 18,
               ),
@@ -160,9 +214,9 @@ class _TrainerScreenState extends State<TrainerScreen> {
                 fontSize: 18,
               ),
             ),
-            const Text(
-              '0',
-              style: TextStyle(
+            Text(
+              '$totalHands',
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 18,
               ),
@@ -174,7 +228,8 @@ class _TrainerScreenState extends State<TrainerScreen> {
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.red,
-                padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 30.0),
+                padding: const EdgeInsets.symmetric(
+                    vertical: 15.0, horizontal: 30.0),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15),
                 ),
