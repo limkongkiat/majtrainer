@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "191820068370",
+    "firebase_url": "https://mahjong-trainer-default-rtdb.asia-southeast1.firebasedatabase.app",
     "project_id": "mahjong-trainer",
     "storage_bucket": "mahjong-trainer.appspot.com"
   },

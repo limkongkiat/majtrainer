@@ -13,7 +13,7 @@ class TrainerResult extends StatefulWidget {
       this.totalHands, this.callback);
 
   @override
-  _TrainerResultState createState() => _TrainerResultState();
+  State<TrainerResult> createState() => _TrainerResultState();
 }
 
 class _TrainerResultState extends State<TrainerResult> {

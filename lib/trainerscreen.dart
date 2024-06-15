@@ -1,7 +1,9 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'ShantenCalculator.dart';
 import 'TrainerResult.dart';
+import 'Scoreboard.dart';
 
 class TrainerScreen extends StatefulWidget {
   const TrainerScreen({super.key});
@@ -89,12 +91,37 @@ class _TrainerScreenState extends State<TrainerScreen> {
     });
   }
 
+  void updateDatabase() {
+    final database = FirebaseDatabase.instance.ref();
+    final recentScore = <String, dynamic>{
+      'time': DateTime.now().millisecondsSinceEpoch,
+      'score': currScore
+    };
+    database
+        .child('scores')
+        .push()
+        .set(recentScore)
+        .then((_) => print('Score updated'))
+        .catchError((error) => print('You got an error $error'));
+  }
+
   @override
   Widget build(BuildContext context) {
     Result result = findBestDiscard(tileCount);
     if (totalHands >= 5) {
       //Final results screen.
       //TODO: make page not take up only half the screen
+      final database = FirebaseDatabase.instance.ref();
+      final recentScore = <String, dynamic>{
+        'time': DateTime.now().millisecondsSinceEpoch,
+        'score': currScore
+      };
+      database
+          .child('scores')
+          .push()
+          .set(recentScore)
+          .then((_) => print('Score updated'))
+          .catchError((error) => print('You got an error $error'));
       return Scaffold(
           appBar: AppBar(
             title: const Text('Trainer Mode',
@@ -126,6 +153,17 @@ class _TrainerScreenState extends State<TrainerScreen> {
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 20),
+                  const Text(
+                    "Past Scores:",
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 10),
+                  Scoreboard(),
                   ElevatedButton(
                     onPressed: () {
                       Navigator.pop(context);
