@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:math';
 import 'ShantenCalculator.dart';
 import 'TrainerResult.dart';
 import 'Scoreboard.dart';
 
 class TrainerScreen extends StatefulWidget {
-  const TrainerScreen({super.key});
+  final User user;
+  TrainerScreen(this.user);
 
   @override
   _TrainerScreenState createState() => _TrainerScreenState();
@@ -94,7 +96,7 @@ class _TrainerScreenState extends State<TrainerScreen> {
   Widget build(BuildContext context) {
     Result result = findBestDiscard(tileCount);
     if (totalHands >= 5) {
-      return Scoreboard(currScore, totalHands);
+      return Scoreboard(currScore, totalHands, widget.user);
     } else {
       //standard trainer page
       return Scaffold(

@@ -13,7 +13,20 @@
           "package_name": "com.example.majtrainer"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "191820068370-m98u3dbn3e4mdiknmf8jdooplkquvuvt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.majtrainer",
+            "certificate_hash": "a4ee8f76186804da9c10e325f3512ae28923ce3b"
+          }
+        },
+        {
+          "client_id": "191820068370-3qg33ithv9bdgd67tejdkvbl5bs3rt6r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCEjeKcOnmBfub1DDiakapY4Yt0DCdmFyI"
@@ -21,7 +34,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "191820068370-3qg33ithv9bdgd67tejdkvbl5bs3rt6r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

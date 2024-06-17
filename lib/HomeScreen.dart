@@ -2,16 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:majtrainer/DiscardAdviser.dart';
 import 'package:majtrainer/hand_value_calculator.dart';
 import 'package:majtrainer/trainerscreen.dart'; // Import the TrainerScreen
+import 'package:firebase_auth/firebase_auth.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  final User user;
+  const HomeScreen(this.user);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 13, 97, 51),
       appBar: AppBar(
-        title: const Text('Mahjong Trainer', style: TextStyle(color: Colors.white)),
+        title: const Text('Mahjong Trainer',
+            style: TextStyle(color: Colors.white)),
         backgroundColor: const Color.fromARGB(255, 13, 97, 51),
       ),
       body: Center(
@@ -42,7 +45,9 @@ class HomeScreen extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const TrainerScreen()), // Navigate to TrainerScreen
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            TrainerScreen(user)), // Navigate to TrainerScreen
                   );
                 },
                 style: ElevatedButton.styleFrom(
@@ -62,7 +67,8 @@ class HomeScreen extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const DiscardAdvisor()),
+                    MaterialPageRoute(
+                        builder: (context) => const DiscardAdvisor()),
                   );
                 },
                 style: ElevatedButton.styleFrom(
@@ -72,7 +78,8 @@ class HomeScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-                child: const Text('Discard Calculator', style: TextStyle(fontSize: 20)),
+                child: const Text('Discard Calculator',
+                    style: TextStyle(fontSize: 20)),
               ),
             ),
             const SizedBox(height: 20),
@@ -82,7 +89,8 @@ class HomeScreen extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const HandValueCalculator()),
+                    MaterialPageRoute(
+                        builder: (context) => const HandValueCalculator()),
                   );
                 },
                 style: ElevatedButton.styleFrom(
@@ -92,7 +100,8 @@ class HomeScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-                child: const Text('Hand Value Calculator', style: TextStyle(fontSize: 20)),
+                child: const Text('Hand Value Calculator',
+                    style: TextStyle(fontSize: 20)),
               ),
             ),
             const SizedBox(height: 20),

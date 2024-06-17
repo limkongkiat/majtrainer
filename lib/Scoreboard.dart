@@ -1,22 +1,24 @@
 import 'package:flutter/material.dart';
 import 'TrainerScore.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Scoreboard extends StatelessWidget {
-  final database = FirebaseDatabase.instance.ref('scores');
+  final database = FirebaseDatabase.instance.ref();
   //late DatabaseReference deviceRef;
   int currScore, totalHands;
+  final User user;
 
-  Scoreboard(this.currScore, this.totalHands);
+  Scoreboard(this.currScore, this.totalHands, this.user);
 
   void updateDatabase() {
-    final database = FirebaseDatabase.instance.ref();
+    //final database = FirebaseDatabase.instance.ref();
     final recentScore = <String, dynamic>{
       'time': DateTime.now().millisecondsSinceEpoch,
       'score': currScore
     };
     database
-        .child('scores')
+        .child(user.uid)
         .push()
         .set(recentScore)
         .then((_) => print('Score updated'))
@@ -24,8 +26,8 @@ class Scoreboard extends StatelessWidget {
   }
 
   Future<List<TrainerScore>> fetchTrainerScores() async {
-    //DatabaseReference ref = FirebaseDatabase.instance.ref('scores');
-    DataSnapshot snapshot = await database.get();
+    DatabaseReference ref = database.child(user.uid);
+    DataSnapshot snapshot = await ref.get();
 
     if (snapshot.exists && snapshot.value is Map) {
       final data = snapshot.value as Map<Object?, Object?>;
