@@ -53,7 +53,8 @@ class DiscardResult extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     selectedImages.remove(result.bestTile);
-    return Container(
+    return Scaffold(
+        body: Container(
       color: Color.fromARGB(255, 13, 97, 51),
       padding: const EdgeInsets.all(16.0),
       child: Center(
@@ -141,6 +142,6 @@ class DiscardResult extends StatelessWidget {
           ),
         ],
       )),
-    );
+    ));
   }
 }

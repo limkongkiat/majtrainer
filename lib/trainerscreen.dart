@@ -1,4 +1,3 @@
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'ShantenCalculator.dart';
@@ -91,95 +90,11 @@ class _TrainerScreenState extends State<TrainerScreen> {
     });
   }
 
-  void updateDatabase() {
-    final database = FirebaseDatabase.instance.ref();
-    final recentScore = <String, dynamic>{
-      'time': DateTime.now().millisecondsSinceEpoch,
-      'score': currScore
-    };
-    database
-        .child('scores')
-        .push()
-        .set(recentScore)
-        .then((_) => print('Score updated'))
-        .catchError((error) => print('You got an error $error'));
-  }
-
   @override
   Widget build(BuildContext context) {
     Result result = findBestDiscard(tileCount);
     if (totalHands >= 5) {
-      //Final results screen.
-      //TODO: make page not take up only half the screen
-      final database = FirebaseDatabase.instance.ref();
-      final recentScore = <String, dynamic>{
-        'time': DateTime.now().millisecondsSinceEpoch,
-        'score': currScore
-      };
-      database
-          .child('scores')
-          .push()
-          .set(recentScore)
-          .then((_) => print('Score updated'))
-          .catchError((error) => print('You got an error $error'));
-      return Scaffold(
-          appBar: AppBar(
-            title: const Text('Trainer Mode',
-                style: TextStyle(color: Colors.white)),
-            backgroundColor: const Color.fromARGB(255, 13, 97, 51),
-          ),
-          body: Container(
-              color: const Color.fromARGB(255, 13, 97, 51),
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                //crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const Text(
-                    'Trainer Mode',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  Text(
-                    "Done!\nScore: $currScore / $totalHands",
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 32,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 20),
-                  const Text(
-                    "Past Scores:",
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 32,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 10),
-                  Scoreboard(),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.red,
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 15.0, horizontal: 30.0),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                    ),
-                    child: const Text('BACK', style: TextStyle(fontSize: 20)),
-                  ),
-                ],
-              )));
+      return Scoreboard(currScore, totalHands);
     } else {
       //standard trainer page
       return Scaffold(
