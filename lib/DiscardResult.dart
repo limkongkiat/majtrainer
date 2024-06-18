@@ -1,50 +1,8 @@
 import 'package:flutter/material.dart';
 import 'ShantenCalculator.dart';
+import 'RefLists.dart';
 
 class DiscardResult extends StatelessWidget {
-  final List<String> buttonImages = [
-    'assets/Man1.png',
-    'assets/Man2.png',
-    'assets/Man3.png',
-    'assets/Man4.png',
-    'assets/Man5.png',
-    'assets/Man6.png',
-    'assets/Man7.png',
-    'assets/Man8.png',
-    'assets/Man9.png',
-    'assets/Sou1.png',
-    'assets/Sou2.png',
-    'assets/Sou3.png',
-    'assets/Sou4.png',
-    'assets/Sou5.png',
-    'assets/Sou6.png',
-    'assets/Sou7.png',
-    'assets/Sou8.png',
-    'assets/Sou9.png',
-    'assets/Pin1.png',
-    'assets/Pin2.png',
-    'assets/Pin3.png',
-    'assets/Pin4.png',
-    'assets/Pin5.png',
-    'assets/Pin6.png',
-    'assets/Pin7.png',
-    'assets/Pin8.png',
-    'assets/Pin9.png',
-    'assets/Ton.png',
-    'assets/Nan.png',
-    'assets/Shaa.png',
-    'assets/Pei.png',
-    'assets/Chun.png',
-    'assets/Hatsu.png',
-    'assets/Haku.png',
-  ];
-
-  final List<String> handTypeCode = [
-    "standard hand",
-    "Chiitoitsu hand",
-    'Kokushi Musou hand'
-  ];
-
   final Result result;
   final List<int> selectedImages;
 

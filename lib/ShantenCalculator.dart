@@ -19,12 +19,14 @@ class ShantenCalculator {
     int chiitoiShanten = calculateChiitoitsuShanten(handToCheck);
 
     if (chiitoiShanten < 0) {
+      handType = 1;
       return chiitoiShanten;
     }
 
     int kokushiShanten = calculateKokushiShanten(handToCheck);
 
     if (kokushiShanten < 3) {
+      handType = 2;
       return kokushiShanten;
     }
 

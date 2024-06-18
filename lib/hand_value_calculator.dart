@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'RefLists.dart';
 
 class HandValueCalculator extends StatefulWidget {
   const HandValueCalculator({super.key});
@@ -8,43 +9,6 @@ class HandValueCalculator extends StatefulWidget {
 }
 
 class _HandValueCalculatorState extends State<HandValueCalculator> {
-  List<String> buttonImages = [
-    'assets/Man1.png',
-    'assets/Man2.png',
-    'assets/Man3.png',
-    'assets/Man4.png',
-    'assets/Man5.png',
-    'assets/Man6.png',
-    'assets/Man7.png',
-    'assets/Man8.png',
-    'assets/Man9.png',
-    'assets/Sou1.png',
-    'assets/Sou2.png',
-    'assets/Sou3.png',
-    'assets/Sou4.png',
-    'assets/Sou5.png',
-    'assets/Sou6.png',
-    'assets/Sou7.png',
-    'assets/Sou8.png',
-    'assets/Sou9.png',
-    'assets/Pin1.png',
-    'assets/Pin2.png',
-    'assets/Pin3.png',
-    'assets/Pin4.png',
-    'assets/Pin5.png',
-    'assets/Pin6.png',
-    'assets/Pin7.png',
-    'assets/Pin8.png',
-    'assets/Pin9.png',
-    'assets/Ton.png',
-    'assets/Nan.png',
-    'assets/Shaa.png',
-    'assets/Pei.png',
-    'assets/Chun.png',
-    'assets/Hatsu.png',
-    'assets/Haku.png',
-  ];
-
   List<int> selectedImages = [];
   List<int> tileCount = List.filled(34, 0);
 
@@ -97,7 +61,8 @@ class _HandValueCalculatorState extends State<HandValueCalculator> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Hand Value Calculator', style: TextStyle(color: Colors.white)),
+        title: const Text('Hand Value Calculator',
+            style: TextStyle(color: Colors.white)),
         backgroundColor: const Color.fromARGB(255, 13, 97, 51),
       ),
       body: Container(
@@ -106,6 +71,15 @@ class _HandValueCalculatorState extends State<HandValueCalculator> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const Text(
+              '<WORK IN PROGRESS>',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 10),
             const Text(
               'Selected Hand',
               style: TextStyle(
@@ -152,14 +126,17 @@ class _HandValueCalculatorState extends State<HandValueCalculator> {
               children: [
                 Column(
                   children: [
-                    const Text('Table Wind', style: TextStyle(fontSize: 20, color: Colors.white)),
+                    const Text('Table Wind',
+                        style: TextStyle(fontSize: 20, color: Colors.white)),
                     const SizedBox(height: 10),
                     GestureDetector(
                       onTap: () => _selectWind('table'),
                       child: Container(
                         decoration: BoxDecoration(
                           border: Border.all(
-                            color: selectedWind == 'table' ? Colors.yellow : Colors.transparent,
+                            color: selectedWind == 'table'
+                                ? Colors.yellow
+                                : Colors.transparent,
                             width: 4.0,
                           ),
                           borderRadius: BorderRadius.circular(10),
@@ -167,7 +144,8 @@ class _HandValueCalculatorState extends State<HandValueCalculator> {
                         ),
                         padding: const EdgeInsets.all(20.0),
                         child: tableWindIndex != null
-                            ? Image.asset(buttonImages[tableWindIndex!], fit: BoxFit.cover)
+                            ? Image.asset(buttonImages[tableWindIndex!],
+                                fit: BoxFit.cover)
                             : const SizedBox.shrink(),
                       ),
                     ),
@@ -175,14 +153,17 @@ class _HandValueCalculatorState extends State<HandValueCalculator> {
                 ),
                 Column(
                   children: [
-                    const Text('Seat Wind', style: TextStyle(fontSize: 20, color: Colors.white)),
+                    const Text('Seat Wind',
+                        style: TextStyle(fontSize: 20, color: Colors.white)),
                     const SizedBox(height: 10),
                     GestureDetector(
                       onTap: () => _selectWind('seat'),
                       child: Container(
                         decoration: BoxDecoration(
                           border: Border.all(
-                            color: selectedWind == 'seat' ? Colors.yellow : Colors.transparent,
+                            color: selectedWind == 'seat'
+                                ? Colors.yellow
+                                : Colors.transparent,
                             width: 4.0,
                           ),
                           borderRadius: BorderRadius.circular(10),
@@ -190,7 +171,8 @@ class _HandValueCalculatorState extends State<HandValueCalculator> {
                         ),
                         padding: const EdgeInsets.all(20.0),
                         child: seatWindIndex != null
-                            ? Image.asset(buttonImages[seatWindIndex!], fit: BoxFit.cover)
+                            ? Image.asset(buttonImages[seatWindIndex!],
+                                fit: BoxFit.cover)
                             : const SizedBox.shrink(),
                       ),
                     ),
@@ -229,7 +211,8 @@ class _HandValueCalculatorState extends State<HandValueCalculator> {
                           borderRadius: BorderRadius.circular(3),
                         ),
                       ),
-                      child: Image.asset(buttonImages[index], fit: BoxFit.cover),
+                      child:
+                          Image.asset(buttonImages[index], fit: BoxFit.cover),
                     );
                   },
                 ),
@@ -263,12 +246,14 @@ class _HandValueCalculatorState extends State<HandValueCalculator> {
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.orange,
-                      padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 30.0),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 15.0, horizontal: 30.0),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15),
                       ),
                     ),
-                    child: const Text('CALCULATE', style: TextStyle(fontSize: 20)),
+                    child:
+                        const Text('CALCULATE', style: TextStyle(fontSize: 20)),
                   ),
                   ElevatedButton(
                     onPressed: () {
@@ -276,7 +261,8 @@ class _HandValueCalculatorState extends State<HandValueCalculator> {
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.red,
-                      padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 30.0),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 15.0, horizontal: 30.0),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15),
                       ),
