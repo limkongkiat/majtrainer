@@ -6,11 +6,12 @@ class TrainerResult extends StatefulWidget {
   int chosen;
   Result result;
   List<int> selectedImages;
+  List<int> hand;
   int currScore;
   int totalHands;
 
-  TrainerResult(this.chosen, this.result, this.selectedImages, this.currScore,
-      this.totalHands, this.callback);
+  TrainerResult(this.chosen, this.result, this.selectedImages, this.hand,
+      this.currScore, this.totalHands, this.callback);
 
   @override
   State<TrainerResult> createState() => _TrainerResultState();
@@ -54,16 +55,23 @@ class _TrainerResultState extends State<TrainerResult> {
     'assets/Haku.png',
   ];
 
-  final List<String> handTypeCode = [
-    "standard hand",
-    "Chiitoitsu hand",
-    'Kokushi Musou hand'
-  ];
+  bool checkIfCorrect(List<int> hand, int tile, Result result) {
+    bool isCorrect = false;
+    hand[tile] -= 1;
+    ShantenCalculator tempCalc = ShantenCalculator();
+    if (tempCalc.calculateMinimumShanten(hand) == result.shanten &&
+        calculateUkeire(hand) >= result.ukeire) {
+      isCorrect = true;
+    } else {
+      isCorrect = false;
+    }
+    return isCorrect;
+  }
 
   @override
   Widget build(BuildContext context) {
-    bool isCorrect =
-        widget.selectedImages[widget.chosen] == widget.result.bestTile;
+    bool isCorrect = checkIfCorrect(
+        widget.hand, widget.selectedImages[widget.chosen], widget.result);
     //Result result = findBestDiscard(tileCount);
     return Scaffold(
       appBar: AppBar(
@@ -106,69 +114,102 @@ class _TrainerResultState extends State<TrainerResult> {
                 ),
                 itemCount: widget.selectedImages.length,
                 itemBuilder: (context, index) {
-                  if (widget.selectedImages[index] == widget.result.bestTile) {
-                    return Padding(
-                      padding: const EdgeInsets.all(2.0),
-                      child: Stack(children: <Widget>[
-                        Container(
-                          padding: const EdgeInsets.all(2.0),
-                          decoration: const BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(2.0)),
-                              color: Colors.white),
-                          child: Image.asset(
-                            buttonImages[widget.selectedImages[index]],
-                            fit: BoxFit.contain,
-                          ),
-                        ),
-                        Container(color: Colors.green.withOpacity(0.5))
-                      ]),
-                    );
-                  } else if (index == widget.chosen) {
-                    return Padding(
-                      padding: const EdgeInsets.all(2.0),
-                      child: Stack(children: <Widget>[
-                        Container(
-                          padding: const EdgeInsets.all(2.0),
-                          decoration: const BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(2.0)),
-                              color: Colors.white),
-                          child: Image.asset(
-                            buttonImages[widget.selectedImages[index]],
-                            fit: BoxFit.contain,
-                          ),
-                        ),
-                        Container(color: Colors.red.withOpacity(0.5))
-                      ]),
-                    );
-                  } else {
-                    return Padding(
-                      padding: const EdgeInsets.all(2.0),
-                      child: Container(
+                  if (!isCorrect) {
+                    if (widget.selectedImages[index] ==
+                        widget.result.bestTile) {
+                      return Padding(
                         padding: const EdgeInsets.all(2.0),
-                        decoration: const BoxDecoration(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(2.0)),
-                            color: Colors.white),
-                        child: Image.asset(
-                          buttonImages[widget.selectedImages[index]],
-                          fit: BoxFit.contain,
+                        child: Stack(children: <Widget>[
+                          Container(
+                            padding: const EdgeInsets.all(2.0),
+                            decoration: const BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(2.0)),
+                                color: Colors.white),
+                            child: Image.asset(
+                              buttonImages[widget.selectedImages[index]],
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                          Container(color: Colors.green.withOpacity(0.5))
+                        ]),
+                      );
+                    } else if (index == widget.chosen) {
+                      return Padding(
+                        padding: const EdgeInsets.all(2.0),
+                        child: Stack(children: <Widget>[
+                          Container(
+                            padding: const EdgeInsets.all(2.0),
+                            decoration: const BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(2.0)),
+                                color: Colors.white),
+                            child: Image.asset(
+                              buttonImages[widget.selectedImages[index]],
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                          Container(color: Colors.red.withOpacity(0.5))
+                        ]),
+                      );
+                    } else {
+                      return Padding(
+                        padding: const EdgeInsets.all(2.0),
+                        child: Container(
+                          padding: const EdgeInsets.all(2.0),
+                          decoration: const BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(2.0)),
+                              color: Colors.white),
+                          child: Image.asset(
+                            buttonImages[widget.selectedImages[index]],
+                            fit: BoxFit.contain,
+                          ),
                         ),
-                      ),
-                    );
+                      );
+                    }
+                  } else {
+                    if (index == widget.chosen) {
+                      return Padding(
+                        padding: const EdgeInsets.all(2.0),
+                        child: Stack(children: <Widget>[
+                          Container(
+                            padding: const EdgeInsets.all(2.0),
+                            decoration: const BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(2.0)),
+                                color: Colors.white),
+                            child: Image.asset(
+                              buttonImages[widget.selectedImages[index]],
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                          Container(color: Colors.green.withOpacity(0.5))
+                        ]),
+                      );
+                    } else {
+                      return Padding(
+                        padding: const EdgeInsets.all(2.0),
+                        child: Container(
+                          padding: const EdgeInsets.all(2.0),
+                          decoration: const BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(2.0)),
+                              color: Colors.white),
+                          child: Image.asset(
+                            buttonImages[widget.selectedImages[index]],
+                            fit: BoxFit.contain,
+                          ),
+                        ),
+                      );
+                    }
                   }
                 },
               ),
             ),
             const SizedBox(height: 20),
-            Text(
-                '${isCorrect ? 'Correct!' : 'Wrong!'} Throw ${widget.result.bestTile} for a ${handTypeCode[widget.result.handType]} at ${widget.result.shanten}-shanten with acceptance of ${widget.result.ukeire} tiles',
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                ),
-                textAlign: TextAlign.center),
+            FeedbackText(
+                widget.selectedImages, widget.chosen, widget.result, isCorrect),
             const SizedBox(height: 20),
             const Text(
               'Current Score:',
@@ -202,8 +243,7 @@ class _TrainerResultState extends State<TrainerResult> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                widget.callback(widget.selectedImages[widget.chosen] ==
-                    widget.result.bestTile);
+                widget.callback(isCorrect);
                 Navigator.pop(context);
               },
               style: ElevatedButton.styleFrom(
@@ -220,5 +260,41 @@ class _TrainerResultState extends State<TrainerResult> {
         ),
       ),
     );
+  }
+}
+
+class FeedbackText extends StatelessWidget {
+  final List<int> selectedImages;
+  final int chosen;
+  final Result result;
+  final bool isCorrect;
+
+  static const List<String> handTypeCode = [
+    "standard hand",
+    "Chiitoitsu hand",
+    'Kokushi Musou hand'
+  ];
+
+  const FeedbackText(
+      this.selectedImages, this.chosen, this.result, this.isCorrect);
+
+  @override
+  Widget build(BuildContext context) {
+    if (isCorrect) {
+      return Text(
+          'Correct! You get a ${handTypeCode[result.handType]} at ${result.shanten}-shanten with acceptance of ${result.ukeire} tiles',
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 18,
+          ),
+          textAlign: TextAlign.center);
+    }
+    return Text(
+        'Wrong! Throw ${result.bestTile} for a ${handTypeCode[result.handType]} at ${result.shanten}-shanten with acceptance of ${result.ukeire} tiles',
+        style: const TextStyle(
+          color: Colors.white,
+          fontSize: 18,
+        ),
+        textAlign: TextAlign.center);
   }
 }

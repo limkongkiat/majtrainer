@@ -104,6 +104,28 @@ class _TrainerScreenState extends State<TrainerScreen> {
           title:
               const Text('Trainer Mode', style: TextStyle(color: Colors.white)),
           backgroundColor: const Color.fromARGB(255, 13, 97, 51),
+          actions: <Widget>[
+            IconButton(
+              icon: const Icon(Icons.help, color: Colors.white),
+              tooltip: 'Help',
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text('Close'),
+                            ),
+                          ],
+                          title: const Text(
+                              'This is a quiz to test your Mahjong skills!\n\nFor each given hand, choose the best tile to discard to maximise your winrate. Simply click the tile you wish to choose.\n\nAfter each hand, you will be told whether you have chosen the right or wrong hand.\n\nAfter 5 hands, a score out of 5 will be given. Past scores can also be seen to see your progress!'),
+                        ));
+              },
+            )
+          ],
         ),
         body: Container(
           color: const Color.fromARGB(255, 13, 97, 51),
@@ -151,6 +173,7 @@ class _TrainerScreenState extends State<TrainerScreen> {
                                       index,
                                       result,
                                       selectedImages,
+                                      tileCount,
                                       currScore,
                                       totalHands,
                                       nextHand)));
