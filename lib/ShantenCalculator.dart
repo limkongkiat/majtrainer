@@ -241,21 +241,21 @@ Result findBestDiscard(List<int> hand) {
   return Result(bestTile, initShanten, ukeire, handType);
 }
 
-void main() {
-  List<int> rawHand = [2, 3, 4, 5, 6, 14, 17, 14, 17, 17, 3, 23, 24, 3];
-  List<int> hand = List<int>.filled(34, 0);
-  for (int i = 0; i < rawHand.length; i++) {
-    hand[rawHand[i]] += 1;
-  }
-  // for (int i = 0; i < 3; i++) {
-  //   hand[9 * i] = 1;
-  //   hand[9 * i + 8] = 1;
-  // }
-  // for (int i = 27; i < 34; i++) {
-  //   hand[i] = 1;
-  // }
-  //hand[1] = 1;
-  Result result = findBestDiscard(hand);
-  print(
-      '${result.bestTile}, ${result.shanten}, ${result.ukeire}, ${result.handType}');
-}
+// void main() {
+//   List<int> rawHand = [2, 3, 4, 5, 6, 14, 17, 14, 17, 17, 3, 23, 24, 3];
+//   List<int> hand = List<int>.filled(34, 0);
+//   for (int i = 0; i < rawHand.length; i++) {
+//     hand[rawHand[i]] += 1;
+//   }
+//   // for (int i = 0; i < 3; i++) {
+//   //   hand[9 * i] = 1;
+//   //   hand[9 * i + 8] = 1;
+//   // }
+//   // for (int i = 27; i < 34; i++) {
+//   //   hand[i] = 1;
+//   // }
+//   //hand[1] = 1;
+//   Result result = findBestDiscard(hand);
+//   print(
+//       '${result.bestTile}, ${result.shanten}, ${result.ukeire}, ${result.handType}');
+// }

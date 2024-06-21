@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'ShantenCalculator.dart';
 import 'RefLists.dart';
+import 'HelpPage.dart';
 
 class TrainerResult extends StatefulWidget {
   final Function(bool) callback;
@@ -42,6 +43,16 @@ class _TrainerResultState extends State<TrainerResult> {
         title:
             const Text('Trainer Mode', style: TextStyle(color: Colors.white)),
         backgroundColor: const Color.fromARGB(255, 13, 97, 51),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.help, color: Colors.white),
+            tooltip: 'Help',
+            onPressed: () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => HelpPage()));
+            },
+          )
+        ],
       ),
       body: Container(
         color: const Color.fromARGB(255, 13, 97, 51),
@@ -248,7 +259,7 @@ class FeedbackText extends StatelessWidget {
           textAlign: TextAlign.center);
     }
     return Text(
-        'Wrong! Throw ${result.bestTile} for a ${handTypeCode[result.handType]} at ${result.shanten}-shanten with acceptance of ${result.ukeire} tiles',
+        'Wrong! Throw ${tileCode[result.bestTile]} for a ${handTypeCode[result.handType]} at ${result.shanten}-shanten with acceptance of ${result.ukeire} tiles',
         style: const TextStyle(
           color: Colors.white,
           fontSize: 18,

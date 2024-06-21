@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'TrainerScore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'RefLists.dart';
 
 class Scoreboard extends StatelessWidget {
   final database = FirebaseDatabase.instance.ref();
