@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:majtrainer/DiscardAdviser.dart';
-import 'package:majtrainer/hand_value_calculator.dart';
+import 'package:majtrainer/HandValueCalculator.dart';
 import 'package:majtrainer/trainerscreen.dart'; // Import the TrainerScreen
 import 'package:firebase_auth/firebase_auth.dart';
 

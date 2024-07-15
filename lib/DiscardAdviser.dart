@@ -82,6 +82,7 @@ class _DiscardAdvisorState extends State<DiscardAdvisor> {
             Flexible(
               //flex: 2,
               child: GridView.builder(
+                physics: const NeverScrollableScrollPhysics(),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 7,
                   crossAxisSpacing: 2.0,
