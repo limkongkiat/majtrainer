@@ -41,6 +41,7 @@ class HandValueResult extends StatelessWidget {
                     mainAxisSpacing: 2.0,
                     childAspectRatio: 0.8,
                   ),
+                  physics: const NeverScrollableScrollPhysics(),
                   itemCount: selectedImages.length,
                   itemBuilder: (context, index) {
                     return Padding(
@@ -73,6 +74,7 @@ class HandValueResult extends StatelessWidget {
               const SizedBox(height: 10),
               Flexible(
                   child: ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
                       itemCount: scInfo.taiList.length,
                       itemBuilder: (context, index) {
                         return Text(scInfo.taiList[index],

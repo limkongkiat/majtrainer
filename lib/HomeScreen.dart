@@ -104,36 +104,36 @@ class HomeScreen extends StatelessWidget {
                     style: TextStyle(fontSize: 20)),
               ),
             ),
-            const SizedBox(height: 20),
-            SizedBox(
-              width: 250,
-              child: ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.yellow,
-                  padding: const EdgeInsets.symmetric(vertical: 15),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-                child: const Text('Settings', style: TextStyle(fontSize: 20)),
-              ),
-            ),
-            const SizedBox(height: 20),
-            SizedBox(
-              width: 250,
-              child: ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.yellow,
-                  padding: const EdgeInsets.symmetric(vertical: 15),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-                child: const Text('Changelogs', style: TextStyle(fontSize: 20)),
-              ),
-            ),
+            // const SizedBox(height: 20),
+            // SizedBox(
+            //   width: 250,
+            //   child: ElevatedButton(
+            //     onPressed: () {},
+            //     style: ElevatedButton.styleFrom(
+            //       backgroundColor: Colors.yellow,
+            //       padding: const EdgeInsets.symmetric(vertical: 15),
+            //       shape: RoundedRectangleBorder(
+            //         borderRadius: BorderRadius.circular(10),
+            //       ),
+            //     ),
+            //     child: const Text('Settings', style: TextStyle(fontSize: 20)),
+            //   ),
+            // ),
+            // const SizedBox(height: 20),
+            // SizedBox(
+            //   width: 250,
+            //   child: ElevatedButton(
+            //     onPressed: () {},
+            //     style: ElevatedButton.styleFrom(
+            //       backgroundColor: Colors.yellow,
+            //       padding: const EdgeInsets.symmetric(vertical: 15),
+            //       shape: RoundedRectangleBorder(
+            //         borderRadius: BorderRadius.circular(10),
+            //       ),
+            //     ),
+            //     child: const Text('Changelogs', style: TextStyle(fontSize: 20)),
+            //   ),
+            // ),
           ],
         ),
       ),

@@ -38,7 +38,7 @@ class WinTileSelector extends StatelessWidget {
                           ),
                         ],
                         title: const Text(
-                            'This is a quiz to test your Mahjong skills!\n\nFor each given hand, choose the best tile to discard to maximise your winrate. Simply click the tile you wish to choose.\n\nAfter each hand, you will be told whether you have chosen the right or wrong hand.\n\nAfter 5 hands, a score out of 5 will be given. Past scores can also be seen to see your progress!'),
+                            'The winning tile refers to the last tile you drew/another player discarded which led to you winning the hand.'),
                       ));
             },
           )

@@ -43,7 +43,7 @@ class DiscardResult extends StatelessWidget {
                   )),
               const SizedBox(height: 10),
               Container(
-                  width: 120,
+                  width: 150,
                   height: 200,
                   decoration: const BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(10.0)),
@@ -77,6 +77,7 @@ class DiscardResult extends StatelessWidget {
                     mainAxisSpacing: 2.0,
                     childAspectRatio: 0.8,
                   ),
+                  physics: const NeverScrollableScrollPhysics(),
                   itemCount: selectedImages.length,
                   itemBuilder: (context, index) {
                     return Padding(
