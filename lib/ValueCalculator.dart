@@ -7,8 +7,8 @@ class ScoreInfo {
 }
 
 class ValueCalculator {
-  ScoreInfo getScoreInfo(
-      Result result, List<int> hand, int tableWindIdx, int seatWindIdx) {
+  ScoreInfo getScoreInfo(Result result, List<int> hand, int tableWindIdx,
+      int seatWindIdx, int winningTile) {
     ScoreInfo finalScoreInfo = ScoreInfo();
     if (isKokushi(result)) {
       finalScoreInfo.score = 5; //default max score
@@ -37,7 +37,7 @@ class ValueCalculator {
     }
 
     PinfuChecker pfc = PinfuChecker();
-    if (pfc.isPinfu(hand)) {
+    if (pfc.isPinfu(hand, winningTile)) {
       finalScoreInfo.score += 4;
       finalScoreInfo.taiList.add('Pinfu');
       return finalScoreInfo;
@@ -149,14 +149,15 @@ class PinfuChecker {
   int pair = 0;
   int partialSets = 0;
   int bestShanten = 8;
+  bool isCorrectWinTile = false;
   //int handType = 0;
 
-  bool isPinfu(List<int> hand) {
+  bool isPinfu(List<int> hand, int winningTile) {
     for (int i = 0; i < hand.length; i++) {
       if (hand[i] >= 2) {
         pair++;
         hand[i] -= 2;
-        removeCompletedSets(hand, 0);
+        removeCompletedSets(hand, winningTile, 0);
         hand[i] += 2;
         pair--;
       }
@@ -164,10 +165,10 @@ class PinfuChecker {
 
     //removeCompletedSets(hand, 0);
 
-    return (bestShanten == -1);
+    return (bestShanten == -1 && isCorrectWinTile);
   }
 
-  void removeCompletedSets(List<int> hand, int i) {
+  void removeCompletedSets(List<int> hand, int winningTile, int i) {
     if (bestShanten <= -1) return;
 
     for (; i < hand.length && hand[i] == 0; i++) {}
@@ -193,14 +194,20 @@ class PinfuChecker {
       hand[i]--;
       hand[i + 1]--;
       hand[i + 2]--;
-      removeCompletedSets(hand, i);
+      if (winningTile == i || winningTile == i + 2) {
+        isCorrectWinTile = true;
+      }
+      removeCompletedSets(hand, winningTile, i);
+      if (bestShanten > -1) {
+        isCorrectWinTile = false;
+      }
       hand[i]++;
       hand[i + 1]++;
       hand[i + 2]++;
       completeSets--;
     }
 
-    removeCompletedSets(hand, i + 1);
+    removeCompletedSets(hand, winningTile, i + 1);
   }
 
   // void removePotentialSets(List<int> hand, int i) {
@@ -259,14 +266,14 @@ void main() {
   List<int> tileCount = [
     2,
     2,
-    3,
+    2,
     1,
-    0,
+    1,
     0,
     1,
     1,
     1, //9-man
-    0,
+    1,
     0,
     0,
     2,
@@ -274,7 +281,7 @@ void main() {
     0,
     0,
     0,
-    1, //9-s?
+    0, //9-s?
     0,
     0,
     0,
@@ -294,5 +301,5 @@ void main() {
   ];
   PinfuChecker pfc = PinfuChecker();
   print(tileCount);
-  print(pfc.isPinfu(tileCount));
+  print(pfc.isPinfu(tileCount, 4));
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:majtrainer/ShantenCalculator.dart';
 import 'RefLists.dart';
+import 'WinTileSelector.dart';
 import 'ValueCalculator.dart';
 import 'HandValueResult.dart';
 
@@ -105,6 +106,28 @@ class _HandValueCalculatorState extends State<HandValueCalculator> {
         title: const Text('Hand Value Calculator',
             style: TextStyle(color: Colors.white)),
         backgroundColor: const Color.fromARGB(255, 13, 97, 51),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.help, color: Colors.white),
+            tooltip: 'Help',
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text('Close'),
+                          ),
+                        ],
+                        title: const Text(
+                            'Select tiles from the bottom half of the screen to form your hand.\n\nTo deselect a tile, tap the tile in the selected hand.\n\nSelect Table/Seat Wind by clicking the blank tiles, then selecting the corresponding wind from the bottom half of the screen.\n\nOnce all tiles, have been selected, press Calculate to calculate how many points (tai) your hand has.'),
+                      ));
+            },
+          )
+        ],
       ),
       body: Container(
         color: const Color.fromARGB(255, 13, 97, 51),
@@ -313,14 +336,18 @@ class _HandValueCalculatorState extends State<HandValueCalculator> {
                             ),
                           );
                         } else {
-                          ValueCalculator vc = ValueCalculator();
-                          ScoreInfo scInfo = vc.getScoreInfo(result, tileCount,
-                              tableWindIndex!, seatWindIndex!);
+                          // ValueCalculator vc = ValueCalculator();
+                          // ScoreInfo scInfo = vc.getScoreInfo(result, tileCount,
+                          //     tableWindIndex!, seatWindIndex!);
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      HandValueResult(selectedImages, scInfo)));
+                                  builder: (context) => WinTileSelector(
+                                      selectedImages,
+                                      tileCount,
+                                      result,
+                                      tableWindIndex!,
+                                      seatWindIndex!)));
                         }
                       }
                     },
