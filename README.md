@@ -1,13 +1,13 @@
-# majtrainer
+# Mahjong Trainer
 
 This is an app made for Andriod.
 
-There are 3 apk files listed in the repository as follows:
-ARM64: https://github.com/limkongkiat/majtrainer/blob/main/app-arm64-v8a-release.apk
-ARM EABI: https://github.com/limkongkiat/majtrainer/blob/main/app-armeabi-v7a-release.apk
+There are 3 apk files listed in the repository as follows: <br/>
+ARM64: https://github.com/limkongkiat/majtrainer/blob/main/app-arm64-v8a-release.apk <br/>
+ARM EABI: https://github.com/limkongkiat/majtrainer/blob/main/app-armeabi-v7a-release.apk <br/>
 x86: https://github.com/limkongkiat/majtrainer/blob/main/app-x86_64-release.apk
 
-#IF USING ANDRIOD PHONE
+## IF USING ANDRIOD PHONE
 One of the 3 apk files should work and sucessfully run on your phone
 
 Else, follow the troubleshoot:
@@ -15,7 +15,7 @@ Else, follow the troubleshoot:
 2) Enable the option that says "Allow installation of apps from other sources other than play store"
 
 
-#IF OPENING USING COMPUTER
+## IF OPENING USING COMPUTER
 
 1) Download Bluestacks. Take note to download the right version for windows/mac/linux/etc.
 2) Launch BlueStacks:
